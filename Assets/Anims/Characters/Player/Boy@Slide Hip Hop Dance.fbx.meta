@@ -1,24 +1,9 @@
 fileFormatVersion: 2
-guid: cbe34e652eb881b4cbf1623205dbcb65
+guid: d08566a33f8301f4da8f8ed0d373f2b8
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: clothes1
-    second: {fileID: 2100000, guid: 0bcf9a29246562247b53d39464bbc2c4, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: phong1
-    second: {fileID: 2100000, guid: 9a979de95efc4eb47b5ea1f3885e7920, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: skin1
-    second: {fileID: 2100000, guid: c5af6fd4bbeb29f439298e619314fb69, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

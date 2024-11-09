@@ -32,6 +32,7 @@ public class PlayerController : CharacterBase
 
     private void FixedUpdate() 
     {
+        if(GameManager.Instance.gameState==GameManager.GameStates.race)
         Movement();    
     }
 

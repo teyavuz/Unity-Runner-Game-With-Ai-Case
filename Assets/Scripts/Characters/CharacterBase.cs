@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CharacterBase : MonoBehaviour
@@ -21,13 +22,21 @@ public class CharacterBase : MonoBehaviour
     public bool isGrounded;
     public Vector3 startPos;
 
-        private void Start() 
+    [Header("DeathCounter")]
+    [SerializeField] private TextMeshProUGUI deathText;
+
+    private void Start()
     {
-        startPos = gameObject.transform.position;    
+        startPos = gameObject.transform.position;
     }
 
     public void TeleportStartPosition()
     {
+        int deathCount = PlayerPrefs.GetInt("deathCount");
         gameObject.transform.position = startPos;
+        deathCount++;
+        PlayerPrefs.SetInt("deathCount", deathCount);
+
+        deathText.text = deathCount.ToString();
     }
 }

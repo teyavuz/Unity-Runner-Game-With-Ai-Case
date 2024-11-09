@@ -1,18 +1,18 @@
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-    public class RotatingStick : Obstacles
+public class RotatingStick : Obstacles
+{
+    [SerializeField] private float speed;
+    [SerializeField] private float turnDirection;
+
+    void Update()
     {
-        [SerializeField] private float speed;
-        [SerializeField] private float turnDirection;
+        RotateObstacle(gameObject.transform, speed, 0, turnDirection, 0);
+    }
 
-        void Update()
-        {
-            RotateObstacle(gameObject.transform, speed, 0, turnDirection, 0);
-        }
-
-        private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -24,4 +24,4 @@
             }
         }
     }
-    }
+}
