@@ -7,6 +7,13 @@ public class RotatingStick : Obstacles
     [SerializeField] private float speed;
     [SerializeField] private float turnDirection;
 
+    private int ourPlayerLayer;
+
+    private void Start() 
+    {
+        ourPlayerLayer = LayerMask.NameToLayer("OurPlayer");
+    }
+
     void Update()
     {
         RotateObstacle(gameObject.transform, speed, 0, turnDirection, 0);
@@ -16,11 +23,16 @@ public class RotatingStick : Obstacles
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+            CharacterBase playerController = collision.gameObject.GetComponent<CharacterBase>();
 
             if (playerController != null)
             {
                 playerController.TeleportStartPosition();
+            }
+
+            if (collision.gameObject.layer == ourPlayerLayer)
+            {
+                DeathManager.Instance.DeathCountUpdater();
             }
         }
     }

@@ -6,10 +6,15 @@ public class ShiningObject : Obstacles
 {
     [SerializeField] private float moveLastLocation;
     [SerializeField] private ParticleSystem ps;
+    [SerializeField] private float speed;
+
+    private int ourPlayerLayer;
 
     private void Start()
     {
-        MoveObstacle(moveLastLocation, gameObject.transform, 5f);
+        MoveObstacle(moveLastLocation, gameObject.transform, speed);
+
+        ourPlayerLayer = LayerMask.NameToLayer("OurPlayer");
     }
     void Update()
     {
@@ -25,11 +30,16 @@ public class ShiningObject : Obstacles
 
             
 
-            PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+            CharacterBase playerController = other.gameObject.GetComponent<CharacterBase>();
 
             if (playerController != null)
             {
                 playerController.TeleportStartPosition();
+            }
+
+            if (other.gameObject.layer == ourPlayerLayer)
+            {
+                DeathManager.Instance.DeathCountUpdater();
             }
         }    
     }

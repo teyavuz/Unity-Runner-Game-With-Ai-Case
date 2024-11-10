@@ -44,24 +44,29 @@ public class CoinManager : MonoBehaviour
         attachedMesh.enabled = false;
 
         SphereCollider attachedCollider = attachedCoin.GetComponent<SphereCollider>();
-        attachedCollider.enabled=false;
+        attachedCollider.enabled = false;
+
+
+        AudioManager.Instance.CoinPickup();
+
 
         for (int i = 0; i < coinCount; i++)
         {
             GameObject coin = Instantiate(coinPrefab, canvasCoinImagePos.transform.parent);
-            coin.transform.position = worldToCanvasPosition;
 
-            //To-Do coinler hep beraber gidiyor fixle!
+            // DAHA İDEAL BİR YÖNTEM VAR MI ARAŞTIR!
+            Vector3 offset = new Vector3(Random.Range(-100f, 100f), Random.Range(-100f, 100f), 0f);
+            coin.transform.position = worldToCanvasPosition + offset;
+
             coin.transform.DOMove(canvasCoinImagePos.transform.position, animationDuration).OnComplete(() => Destroy(coin));
-            StartCoroutine(waitMe(0.3f));
         }
 
-
         attachedCoin.transform.DOMove(attachedCoin.transform.position, animationDuration).OnComplete(() => Destroy(attachedCoin));
+
+        int totalCoin = PlayerPrefs.GetInt("coinCount");
+        totalCoin += 5;
+        PlayerPrefs.SetInt("coinCount", totalCoin);
+        coinText.text = PlayerPrefs.GetInt("coinCount").ToString();
     }
 
-    private IEnumerator waitMe(float time)
-    {
-        yield return new WaitForSeconds(time);
-    }
 }

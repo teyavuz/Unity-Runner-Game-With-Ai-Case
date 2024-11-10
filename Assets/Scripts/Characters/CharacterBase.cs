@@ -32,7 +32,6 @@ public class CharacterBase : MonoBehaviour
 
     public void TeleportStartPosition()
     {
-        gameObject.transform.position = startPos;
-        DeathManager.Instance.DeathCountUpdater();        
+        gameObject.transform.position = startPos;  
     }
 }

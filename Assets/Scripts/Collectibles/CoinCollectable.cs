@@ -10,11 +10,14 @@ public class CoinCollectable : MonoBehaviour
 
     private Vector3 coinsCanvasPos;
     private Camera mainCam;
+    private int ourPlayerLayer;
 
     private void Start() 
     {
         coinsCanvasPos = gameObject.transform.position;
         mainCam = Camera.main;
+
+        ourPlayerLayer = LayerMask.NameToLayer("OurPlayer");
     }
 
     private void Update() 
@@ -29,7 +32,7 @@ public class CoinCollectable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.layer == ourPlayerLayer)
         {
             CoinManager.Instance.CoinCollected(gameObject, mainCam.WorldToScreenPoint(coinsCanvasPos));
         }

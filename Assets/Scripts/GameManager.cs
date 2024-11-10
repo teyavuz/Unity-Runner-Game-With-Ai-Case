@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     {
         int countdownValue = startValue;
 
+        AudioManager.Instance.PlayMusic(0);
         while (countdownValue > 0)
         {
             countDownText.text = countdownValue.ToString();
@@ -51,7 +52,14 @@ public class GameManager : MonoBehaviour
         // cd -> 0
         countDownText.text = "0 \n RACE!";
         gameState = GameStates.race;
+        AudioManager.Instance.PlayMusic(1);
         yield return new WaitForSeconds(1f);
         Destroy(countDownText);
+    }
+
+
+    public void OnCompleteGame()
+    {
+        gameState = GameStates.end;
     }
 }

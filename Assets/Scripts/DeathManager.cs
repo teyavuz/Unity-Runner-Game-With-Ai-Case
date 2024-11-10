@@ -32,4 +32,5 @@ public class DeathManager : MonoBehaviour
         PlayerPrefs.SetInt("deathCount", deathCount);
         deathText.text = deathCount.ToString();
     }
+
 }

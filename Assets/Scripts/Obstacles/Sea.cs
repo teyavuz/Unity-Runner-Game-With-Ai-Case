@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class Sea : Obstacles
 {
+    private int ourPlayerLayer;
+
+    private void Start() 
+    {
+        ourPlayerLayer = LayerMask.NameToLayer("OurPlayer");
+    }
     private void OnCollisionEnter(Collision other) 
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+            CharacterBase playerController = other.gameObject.GetComponent<CharacterBase>();
 
             if (playerController != null)
             {
                 playerController.TeleportStartPosition();
+            }
+
+            if (other.gameObject.layer == ourPlayerLayer)
+            {
+                DeathManager.Instance.DeathCountUpdater();
             }
         }    
     }
