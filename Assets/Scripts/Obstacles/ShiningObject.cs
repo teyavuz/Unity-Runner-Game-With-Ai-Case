@@ -23,7 +23,7 @@ public class ShiningObject : Obstacles
             var mainModule = ps.main;
             mainModule.startColor = new ParticleSystem.MinMaxGradient(GetRandomColor());
 
-            //Teleport start
+            
 
             PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
 

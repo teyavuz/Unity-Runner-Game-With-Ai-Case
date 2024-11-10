@@ -9,7 +9,6 @@ public class RotatingPlatform : Obstacles
 
     void Update()
     {
-        // Platformu döndür
         RotateObstacle(gameObject.transform, 0.1f, 0, 0, rotZ);
     }
 
@@ -27,6 +26,8 @@ public class RotatingPlatform : Obstacles
         if (other.gameObject.CompareTag("Player"))
         {
             other.transform.SetParent(null);
+
+            other.transform.rotation = Quaternion.identity;
         }
     }
     */

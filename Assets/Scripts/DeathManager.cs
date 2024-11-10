@@ -7,11 +7,29 @@ public class DeathManager : MonoBehaviour
 {
     [Header("Canvas Textes")]
     [SerializeField] private TextMeshProUGUI deathText;
-    [SerializeField] private TextMeshProUGUI coinText;
 
+    public static DeathManager Instance;
+    
     private void Awake() 
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
         deathText.text = PlayerPrefs.GetInt("deathCount").ToString();
-        coinText.text = PlayerPrefs.GetInt("coinCount").ToString();
+    }
+
+    public void DeathCountUpdater()
+    {
+        int deathCount = PlayerPrefs.GetInt("deathCount");
+        deathCount++;
+        PlayerPrefs.SetInt("deathCount", deathCount);
+        deathText.text = deathCount.ToString();
     }
 }

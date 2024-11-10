@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerController : CharacterBase
 {
     [Header("Player Special Settings")]
     private float x, z;
     private Vector3 move = Vector3.zero;
-    [SerializeField] private float jumpSpeed;
+
+    [Header("Joystick")]
+    [SerializeField] private FixedJoystick joystick;
 
     [Header("Ground Layer")]
     [SerializeField] private LayerMask groundLayer;
@@ -22,7 +24,6 @@ public class PlayerController : CharacterBase
         rigidBody = GetComponent<Rigidbody>();
     }
 
-
     private void Update() 
     {
         HandleStateChanges();
@@ -32,14 +33,14 @@ public class PlayerController : CharacterBase
 
     private void FixedUpdate() 
     {
-        if(GameManager.Instance.gameState==GameManager.GameStates.race)
-        Movement();    
+        if(GameManager.Instance.gameState == GameManager.GameStates.race)
+            Movement();    
     }
 
     private void Movement()
     {
-        x = Input.GetAxis("Horizontal");
-        z = Input.GetAxis("Vertical");
+        x = joystick.Horizontal;
+        z = joystick.Vertical;
         move = new Vector3(x, 0, z) * speed * Time.deltaTime;
 
         if (move.magnitude > 0 && currentState != CharacterState.Running)
@@ -61,23 +62,12 @@ public class PlayerController : CharacterBase
         animator.SetFloat("Vertical", z);
     }
 
-    private void OnTriggerStay(Collider other) 
-    {
-        if (isGrounded && Input.GetButtonDown("Jump"))
-        {
-            rigidBody.velocity = Vector3.up * jumpSpeed;
-            animator.SetTrigger("Jumping");
-            currentState = CharacterState.Jumping;
-            isGrounded = false;
-        }    
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (IsGroundedLayer(collision.gameObject))
         {
             isGrounded = true;
-            if (currentState == CharacterState.Jumping || currentState == CharacterState.Falling)
+            if (currentState == CharacterState.Falling)
             {
                 currentState = CharacterState.Idle;
             }
@@ -106,11 +96,6 @@ public class PlayerController : CharacterBase
             {
                 currentPov = lensSettings.FieldOfView;
                 lensSettings.FieldOfView = Mathf.Lerp(currentPov, 60, 0.1f);
-            }
-            else if (currentState == CharacterState.Jumping)
-            {
-                currentPov = lensSettings.FieldOfView;
-                lensSettings.FieldOfView = Mathf.Lerp(currentPov, 64, 0.1f);
             }
             else if (currentState == CharacterState.Falling)
             {

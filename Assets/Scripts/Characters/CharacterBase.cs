@@ -32,11 +32,7 @@ public class CharacterBase : MonoBehaviour
 
     public void TeleportStartPosition()
     {
-        int deathCount = PlayerPrefs.GetInt("deathCount");
         gameObject.transform.position = startPos;
-        deathCount++;
-        PlayerPrefs.SetInt("deathCount", deathCount);
-
-        deathText.text = deathCount.ToString();
+        DeathManager.Instance.DeathCountUpdater();        
     }
 }

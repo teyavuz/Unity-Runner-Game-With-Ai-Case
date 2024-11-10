@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class PaintSequence : MonoBehaviour
 {
+    [Header("Cameras")]
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Camera drawingCamera;
+    [Header("Trail Prefab from Folders")]
     [SerializeField] private LineRenderer trailPrefab;
+    [Header("Other Connections")]
     [SerializeField] private Transform finishTpPoint;
     [SerializeField] private Animator boy;
     [SerializeField] private Slider widthSlider;
@@ -18,9 +21,7 @@ public class PaintSequence : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance.gameState == GameManager.GameStates.painting)
-        {
             Drawable();
-        }
     }
 
     private void OnTriggerEnter(Collider other)
