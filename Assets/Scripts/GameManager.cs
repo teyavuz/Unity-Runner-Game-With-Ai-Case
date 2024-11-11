@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour
     }
 
     public GameStates gameState;
-    [SerializeField] TextMeshProUGUI countDownText;
+    [SerializeField] private TextMeshProUGUI countDownText;
+
+    [SerializeField] private GameObject[] allCanvases;
 
     public static GameManager Instance;
 
@@ -61,5 +63,33 @@ public class GameManager : MonoBehaviour
     public void OnCompleteGame()
     {
         gameState = GameStates.end;
+    }
+
+    public void OpenSpecificCanvas(int i)
+    {
+        StartCoroutine(WaitMe(4f));
+        allCanvases[i].SetActive(true);
+    }
+
+    public void CloseAllCanvases()
+    {
+        foreach (var item in allCanvases)
+        {
+            item.SetActive(false);
+        }
+    }
+
+    public void EndGameButton()
+    {
+         Application.OpenURL("https://www.panteon.games/en/");
+
+         StartCoroutine(WaitMe(2f));
+
+         Application.Quit();
+    }
+
+    private IEnumerator WaitMe(float delay)
+    {
+        yield return new WaitForSeconds(delay);
     }
 }

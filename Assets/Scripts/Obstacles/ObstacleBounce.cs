@@ -5,7 +5,6 @@ public class ObstacleBounce : MonoBehaviour
 {
     [Header("Bounce Settings")]
     [SerializeField] private float bounceForce = 15f;
-    [SerializeField] private float navMeshDisableDuration = 1f;
     [SerializeField] private float velocityResetDelay = 2f;
 
     private void OnCollisionEnter(Collision collision)

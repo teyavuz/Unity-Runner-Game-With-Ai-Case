@@ -7,7 +7,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
 
-    public AudioClip[] musics;
+    [SerializeField] private AudioClip[] musics;
+    [SerializeField] private AudioClip[] effects;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource audioEffect;
 
@@ -46,9 +47,20 @@ public class AudioManager : MonoBehaviour
         audioSource.Play();
     }
 
-    
-    public void CoinPickup()
+    public void PauseMusic()
     {
+        audioSource.Pause();
+    }
+
+    public void UnpauseMusic()
+    {
+        audioSource.UnPause();
+    }
+
+    
+    public void PlayEffect(int audioCount)
+    {
+        audioEffect.clip = effects[audioCount];
         audioEffect.Play();
     }
 }

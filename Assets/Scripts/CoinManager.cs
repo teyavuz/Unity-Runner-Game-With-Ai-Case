@@ -47,7 +47,7 @@ public class CoinManager : MonoBehaviour
         attachedCollider.enabled = false;
 
 
-        AudioManager.Instance.CoinPickup();
+        AudioManager.Instance.PlayEffect(0);
 
 
         for (int i = 0; i < coinCount; i++)

@@ -18,17 +18,17 @@ public class ShiningObject : Obstacles
     }
     void Update()
     {
-        RotateObstacle(gameObject.transform, 0.1f, 0,1,0);
+        RotateObstacle(gameObject.transform, 0.1f, 0, 1, 0);
     }
 
-    private void OnCollisionEnter(Collision other) 
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             var mainModule = ps.main;
-            mainModule.startColor = new ParticleSystem.MinMaxGradient(GetRandomColor());
+            mainModule.startColor = new ParticleSystem.MinMaxGradient(GetRandomColor(Color.white));
 
-            
+
 
             CharacterBase playerController = other.gameObject.GetComponent<CharacterBase>();
 
@@ -41,11 +41,31 @@ public class ShiningObject : Obstacles
             {
                 DeathManager.Instance.DeathCountUpdater();
             }
-        }    
+        }
     }
 
-    private Color GetRandomColor()
+    private Color GetRandomColor(Color currentColor)
+{
+    List<Color> colors = new List<Color>
     {
-        return new Color(Random.value, Random.value, Random.value);
-    }
+        Color.red,            // Kırmızı
+        new Color(1f, 0.5f, 0f), // Turuncu
+        Color.yellow,         // Sarı
+        Color.green,          // Yeşil
+        new Color(1f, 0.08f, 0.58f), // Pembe
+        Color.blue,           // Mavi
+        new Color(0.5f, 0f, 0.5f) // Mor
+    };
+
+    Color selectedColor;
+    
+    do
+    {
+        selectedColor = colors[Random.Range(0, colors.Count)];
+    } 
+    while (selectedColor == currentColor);
+    
+    return selectedColor;
+}
+
 }
