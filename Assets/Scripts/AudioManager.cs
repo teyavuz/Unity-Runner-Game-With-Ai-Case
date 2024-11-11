@@ -24,6 +24,22 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void Update() 
+    {
+        if (GameManager.Instance.gameState == GameManager.GameStates.startCountdown)
+        {
+            audioSource.volume = 1f;
+        }
+        else if(GameManager.Instance.gameState == GameManager.GameStates.race)
+        {
+            audioSource.volume = 0.5f;
+        }
+        else if(GameManager.Instance.gameState == GameManager.GameStates.painting)
+        {
+            audioSource.volume = 0.35f;
+        }
+    }
+
     public void PlayMusic(int audioCount)
     {
         audioSource.clip = musics[audioCount];

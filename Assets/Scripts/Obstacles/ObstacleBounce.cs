@@ -1,43 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class ObstacleBounce : MonoBehaviour
 {
-    public float bounceForce = 15f;
+    [Header("Bounce Settings")]
+    [SerializeField] private float bounceForce = 15f;
+    [SerializeField] private float navMeshDisableDuration = 1f;
+    [SerializeField] private float velocityResetDelay = 2f;
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             Rigidbody playerRigidbody = collision.gameObject.GetComponent<Rigidbody>();
-
-            if (playerRigidbody != null)
-            {
-                Vector3 bounceDirection = -collision.contacts[0].normal;
-                playerRigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
-
-                if (collision.gameObject.layer == LayerMask.NameToLayer("Opponent"))
-                {
-                    NavMeshAgent navMeshAgent = collision.gameObject.GetComponent<NavMeshAgent>();
-
-                    if (navMeshAgent != null)
-                    {
-                        StartCoroutine(DisableNavMeshAgentTemporarily(navMeshAgent, playerRigidbody));
-                    }
-                }
-            }
+            ApplyBounceForce(collision, playerRigidbody);
         }
     }
 
-    private IEnumerator DisableNavMeshAgentTemporarily(NavMeshAgent navMeshAgent, Rigidbody playerRigidbody)
+    private void ApplyBounceForce(Collision collision, Rigidbody playerRigidbody)
     {
-        navMeshAgent.enabled = false;
+        Vector3 bounceDirection = -collision.contacts[0].normal;
+        playerRigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
+        StartCoroutine(ResetVelocityAfterDelay(playerRigidbody, velocityResetDelay));
+    }
 
-        yield return new WaitForSeconds(1f);
-
-        navMeshAgent.enabled = true;
+    private IEnumerator ResetVelocityAfterDelay(Rigidbody playerRigidbody, float delay)
+    {
+        yield return new WaitForSeconds(delay);
         playerRigidbody.velocity = Vector3.zero;
     }
 }

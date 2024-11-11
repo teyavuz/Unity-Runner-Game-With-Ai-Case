@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Pencil : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class Pencil : MonoBehaviour
 
     [Header("Camera")]
     [SerializeField] private Camera usinCamera;
+
+    [Header("PenSize")]
+    [SerializeField] private Slider slider;
 
     private void Awake()
     {
@@ -96,6 +100,12 @@ public class Pencil : MonoBehaviour
 
 
         texture.Apply();
+    }
+
+
+    public void PenSizeChanger()
+    {
+        penSize = slider.value;
     }
 
 
